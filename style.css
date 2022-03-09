@@ -4,9 +4,13 @@
 
 body {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 h1 {
     color: red
+}
+
+#parkPic {
+    width: 200px;
 }
