@@ -48,23 +48,27 @@ function getParks() {
             for (i = 0; i < results.data.length; i++) {
                 var parkName = (JSON.stringify(results.data[i].fullName));
                 var parkName = parkName.replace('"', '').slice(0, -1);
-                // adjust this variable so that it only takes in first 5 characters (404 error with certain 10-digit ZIPs)
                 var parkZIP = firstFive(results.data[i].addresses[0].postalCode);
+                var parkDesc = (JSON.stringify(results.data[i].description))
+
                 var parkCardEl = document.createElement('div');
+                parkCardEl.setAttribute('id', 'parkCard')
 
                 // create Elements here
-                parkCardEl.setAttribute('id', 'parkCard')
                 var parkNameEl = document.createElement('h2');
                 var parkImg = document.createElement('img');
+                var parkInfo = document.createElement('p');
 
                 // add things to Elements here
                 parkNameEl.textContent = parkName;
                 parkImg.setAttribute('src', results.data[i].images[0].url);
                 parkImg.setAttribute('id', 'parkPic');
+                parkInfo.textContent = parkDesc.replace('"', '').slice(0, -1);
 
                 // append Elements here
                 parkCardEl.appendChild(parkNameEl);
                 parkCardEl.appendChild(parkImg);
+                parkCardEl.appendChild(parkInfo);
 
                 // appends entire created card Element to page
                 resultsEl.appendChild(parkCardEl);

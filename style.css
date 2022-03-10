@@ -1,12 +1,18 @@
 * {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
+    display: flexbox;
 }
 
 body {
     display: flex;
     justify-content: space-between;
     background-color: rgba(85, 107, 47, 0.924);
+    margin: 0;
+}
+
+div {
+    display:flex
 }
 
 h1 {
@@ -30,42 +36,53 @@ h3  {
     text-align: center;
     background-color: seashell;
     border: solid 1px black;
-    text-align: center;
     margin: 5px;
-
 }
 
 #parkPic {
     width: 200px;
-    
+}
+
+#weather {
+    width: 20%;
+}
+
+#results {
+    width: 100%;
 }
 
 #weatherCard {
     background-color: rgba(76, 191, 236, 0.794);
-    border: 2px solid black;
-    margin: 1px;
+    border: 1px solid black;
+    margin: 2px;
     text-align: center;
     color: white;
+    padding: 1px;
+    display: block;
+}
+
+#weatherCards {
+    flex-direction: column;
 }
 
 #parkCard {
     border: solid 1px black;
-    align-items: center;
     background-color: rgb(117, 149, 62);
+    margin-bottom: 3px;
+    padding: 5px;
+    display: block;
 }
 
 #form {
     display: flex-box;
     flex-direction: column;
-    align-items: center;
-    justify-content: row;
-    text-align: center;
+    padding: 2px;
 }
 
 #currentDate {
     text-align: center;
     background-color: seashell;
-    color: blue;
+    color: brown;
     margin: 2px 6px 2px 6px;
 }
 
@@ -73,3 +90,4 @@ h3  {
 #submitBtn {
     width: 97%;
 }
+
