@@ -29,6 +29,11 @@ h2 {
     width: 90%;
 }
 
+h2:hover {
+    color: forestgreen;
+    background-color: seashell;
+}
+
 h3  {
     text-align: center;
     margin-top: 0;
@@ -53,6 +58,14 @@ h3  {
     display: block;
     width: 90%;
     border-radius: 5px;
+}
+
+#weatherCard:hover {
+    background-color: dodgerblue;
+}
+
+#weatherCard:hover > #weathHead {
+    background-color: rgba(76, 191, 236, 0.794);
 }
 
 #weatherCards {
@@ -92,12 +105,29 @@ h3  {
     text-align: justify;
     width: 90%;
     display: flex;
+    padding: 5px;
+
+}
+
+#parkDesc:hover{
+    background-color: rgba(78, 105, 25, 0.767);
+    border-radius: 5px;
+    font-size: 105%;
+
 }
 
 #parkPic {
     width: 500px;
     display: flex;
     border-radius: 5px;
+}
+
+#parkPic:hover {
+    filter:drop-shadow(10px 10px 10px black);
+}
+
+#parkAlt {
+    display: none;
 }
 
 #form {
