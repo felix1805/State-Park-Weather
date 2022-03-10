@@ -1,7 +1,6 @@
 * {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-    display: flexbox;
 }
 
 body {
@@ -19,8 +18,7 @@ h1 {
     border: black 1px solid;
     background-color:bisque;
     text-align: center;
-    margin: 5px;
-    padding: 5px 5px 5px 5px;
+    margin-bottom: 0;
 }
 
 h2 {
@@ -32,11 +30,11 @@ h2 {
 }
 
 h3  {
-    color: forestgreen;
     text-align: center;
-    background-color: seashell;
-    border: solid 1px black;
-    margin: 5px;
+    margin-top: 0;
+    color: brown;
+    border: black 1px solid;
+    background-color:bisque;
 }
 
 
@@ -54,18 +52,21 @@ h3  {
     color: white;
     display: block;
     width: 90%;
+    border-radius: 5px;
 }
 
 #weatherCards {
     flex-direction: column;
+    
 }
 
 #weathHead {
-    color: orange;
-    background-color: purple;
+    color:seashell;
+    background-color:dodgerblue;
     font-size: x-large;
     margin-top: 0px;
     border-bottom: black 1px solid;
+    border-radius: 5px 5px 0 0;
 }
 
 #parkCard {
@@ -79,6 +80,11 @@ h3  {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    border-radius: 5px;
+}
+
+#parkName {
+    border-radius: 5px;
 }
 
 #parkDesc {
@@ -89,31 +95,36 @@ h3  {
 }
 
 #parkPic {
-    width: 475px;
+    width: 500px;
     display: flex;
+    border-radius: 5px;
 }
 
 #form {
-    display: flex-box;
+    display: flex;
     flex-direction: column;
-    padding: 2px;
+    margin: 5px
+}
+
+#formHead {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 #currentDate {
     text-align: center;
     background-color: seashell;
     color: brown;
-    margin: 2px 6px 2px 6px;
-}
-
-#stateSearch,
-#submitBtn {
-    width: 97%;
+    border: black 1px solid;
+    background-color:bisque;
+    padding: 5px;
+    font-weight: bold;
 }
 
 @media only screen and (max-width: 1400px) {
     #parkPic {
-        width: 300px;
+        width: 350px;
     }
 }
 
@@ -123,11 +134,14 @@ h3  {
     }
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 700px) {
     #parkPic {
-        width: 100px;
+        width: 135px;
     }
     * {
+        font-size: small;
+    }
+    #weathHead {
         font-size: small;
     }
 }
