@@ -25,21 +25,58 @@ function logData(event) {
 }
 
 function firstFive(zip) {
-    return zip.substring(0,5);
+    return zip.substring(0, 5);
 }
 
 function getParks() {
     resultsEl.innerHTML = '';
     weatherCardsEl.innerHTML = '';
-    var parkHeader = document.createElement('h2');
-    parkHeader.textContent = 'Parks: ';
-    resultsEl.appendChild(parkHeader);
     var userInputEl = document.querySelector('#stateSearch').value;
 
     var parkURL = 'https://developer.nps.gov/api/v1/parks?stateCode=' + userInputEl + '&limit=30&start=0&api_key=B93I9aQi7T1FM0mnp8EPcpawoqg1G1XYI6IVWLWy'
 
     console.log(parkURL);
 
+    function renderWeather(card, parkZIP) {
+        var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?zip=' + parkZIP + ',US&appid=a12e022cb62b59c204d6c4c7065d99c2&units=imperial'
+
+        fetch(weatherURL)
+            .then(toJSON)
+            .then(function (weatherResults) {
+                console.log(weatherResults);
+                console.log(weatherResults.main.temp);
+                console.log(weatherResults.wind.speed);
+                console.log(weatherResults.weather[0].description);
+
+
+                //create Elements here
+                var weathHeadEl = document.createElement('p');
+                var tempEl = document.createElement('p');
+                var humidEl = document.createElement('p');
+                var windEl = document.createElement('p');
+                var condEl = document.createElement('p');
+
+                //dress up Elements here
+                tempEl.textContent = weatherResults.main.temp + '°F';
+                humidEl.textContent = 'Humidity: ' + weatherResults.main.humidity + '%';
+                windEl.textContent = 'Wind Speed: ' + weatherResults.wind.speed + ' mph';
+                condEl.textContent = 'Current Conditions: ' + capitalize(weatherResults.weather[0].description);
+                weathHeadEl.textContent = 'Weather';
+                weathHeadEl.setAttribute('id', 'weathHead');
+
+                //append Elements here
+                var weatherCardEl = document.createElement('div');
+                weatherCardEl.setAttribute('id', 'weatherCard');
+
+                weatherCardEl.appendChild(weathHeadEl);
+                weatherCardEl.appendChild(tempEl);
+                weatherCardEl.appendChild(humidEl);
+                weatherCardEl.appendChild(windEl);
+                weatherCardEl.appendChild(condEl);
+
+                card.appendChild(weatherCardEl);
+            })
+    }
     fetch(parkURL)
         .then(toJSON)
         .then(function (results) {
@@ -61,9 +98,11 @@ function getParks() {
 
                 // add things to Elements here
                 parkNameEl.textContent = parkName;
+                parkNameEl.setAttribute('id', 'parkName');
                 parkImg.setAttribute('src', results.data[i].images[0].url);
                 parkImg.setAttribute('id', 'parkPic');
                 parkInfo.textContent = parkDesc.replace('"', '').slice(0, -1);
+                parkInfo.setAttribute('id', 'parkDesc');
 
                 // append Elements here
                 parkCardEl.appendChild(parkNameEl);
@@ -73,40 +112,7 @@ function getParks() {
                 // appends entire created card Element to page
                 resultsEl.appendChild(parkCardEl);
 
-                var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?zip=' + parkZIP + ',US&appid=a12e022cb62b59c204d6c4c7065d99c2&units=imperial'
-
-                fetch(weatherURL)
-                    .then(toJSON)
-                    .then(function (weatherResults) {
-                        console.log(weatherResults);
-                        console.log(weatherResults.main.temp);
-                        console.log(weatherResults.wind.speed);
-                        console.log(weatherResults.weather[0].description);
-
-
-                        //create Elements here
-                        var tempEl = document.createElement('p');
-                        var humidEl = document.createElement('p');
-                        var windEl = document.createElement('p');
-                        var condEl = document.createElement('p');
-
-                        //dress up Elements here
-                        tempEl.textContent = weatherResults.main.temp + '°F';
-                        humidEl.textContent = 'Humidity: ' + weatherResults.main.humidity + '%';
-                        windEl.textContent = 'Wind Speed: ' + weatherResults.wind.speed + ' mph';
-                        condEl.textContent = 'Current Conditions: ' + capitalize(weatherResults.weather[0].description);
-
-                        //append Elements here
-                        var weatherCardEl = document.createElement('div');
-                        weatherCardEl.setAttribute('id', 'weatherCard');
-
-                        weatherCardEl.appendChild(tempEl);
-                        weatherCardEl.appendChild(humidEl);
-                        weatherCardEl.appendChild(windEl);
-                        weatherCardEl.appendChild(condEl);
-
-                        weatherCardsEl.appendChild(weatherCardEl);
-                    })
+                renderWeather(parkCardEl, parkZIP);
             }
         })
 }
