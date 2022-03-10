@@ -1,16 +1,75 @@
 * {
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
     display: flex;
     justify-content: space-between;
+    background-color: rgba(85, 107, 47, 0.924);
 }
 
 h1 {
-    color: red
+    color: brown;
+    border: black 1px solid;
+    background-color:bisque;
+    text-align: center;
+    margin: 5px;
+    padding: 5px 5px 5px 5px;
+}
+
+h2 {
+    color:seashell;
+    border: solid 1px black;
+    background-color:forestgreen;
+    text-align: center;
+}
+
+h3  {
+    color: forestgreen;
+    text-align: center;
+    background-color: seashell;
+    border: solid 1px black;
+    text-align: center;
+    margin: 5px;
+
 }
 
 #parkPic {
     width: 200px;
+    
+}
+
+#weatherCard {
+    background-color: rgba(76, 191, 236, 0.794);
+    border: 2px solid black;
+    margin: 1px;
+    text-align: center;
+    color: white;
+}
+
+#parkCard {
+    border: solid 1px black;
+    align-items: center;
+    background-color: rgb(117, 149, 62);
+}
+
+#form {
+    display: flex-box;
+    flex-direction: column;
+    align-items: center;
+    justify-content: row;
+    text-align: center;
+}
+
+#currentDate {
+    text-align: center;
+    background-color: seashell;
+    color: blue;
+    margin: 2px 6px 2px 6px;
+}
+
+#stateSearch,
+#submitBtn {
+    width: 97%;
 }

@@ -1,7 +1,12 @@
 var userInputEl = document.querySelector('#stateSearch').value;
 var submitBtnEl = document.querySelector('#submitBtn');
-var formEl = document.getElementById('#form');
+var formEl = document.querySelector('#form');
 var resultsEl = document.querySelector('#results');
+var weatherEl = document.querySelector('#weather');
+var weatherCardsEl = document.querySelector('#weatherCards');
+var currentDate = moment().format('MMM Do YYYY');
+
+
 
 var toJSON = function (response) {
     return response.json();
@@ -19,8 +24,16 @@ function logData(event) {
     getParks();
 }
 
+function firstFive(zip) {
+    return zip.substring(0,5);
+}
+
 function getParks() {
     resultsEl.innerHTML = '';
+    weatherCardsEl.innerHTML = '';
+    var parkHeader = document.createElement('h2');
+    parkHeader.textContent = 'Parks: ';
+    resultsEl.appendChild(parkHeader);
     var userInputEl = document.querySelector('#stateSearch').value;
 
     var parkURL = 'https://developer.nps.gov/api/v1/parks?stateCode=' + userInputEl + '&limit=30&start=0&api_key=B93I9aQi7T1FM0mnp8EPcpawoqg1G1XYI6IVWLWy'
@@ -35,7 +48,8 @@ function getParks() {
             for (i = 0; i < results.data.length; i++) {
                 var parkName = (JSON.stringify(results.data[i].fullName));
                 var parkName = parkName.replace('"', '').slice(0, -1);
-                var parkZIP = results.data[i].addresses[0].postalCode;
+                // adjust this variable so that it only takes in first 5 characters (404 error with certain 10-digit ZIPs)
+                var parkZIP = firstFive(results.data[i].addresses[0].postalCode);
                 var parkCardEl = document.createElement('div');
 
                 // create Elements here
@@ -73,20 +87,36 @@ function getParks() {
                         var condEl = document.createElement('p');
 
                         //dress up Elements here
-                        tempEl.textContent = weatherResults.main.temp;
-                        humidEl.textContent = weatherResults.main.humidity;
-                        windEl.textContent = weatherResults.wind.speed;
-                        condEl.textContent = capitalize(weatherResults.weather[0].description);
+                        tempEl.textContent = weatherResults.main.temp + '°F';
+                        humidEl.textContent = 'Humidity: ' + weatherResults.main.humidity + '%';
+                        windEl.textContent = 'Wind Speed: ' + weatherResults.wind.speed + ' mph';
+                        condEl.textContent = 'Current Conditions: ' + capitalize(weatherResults.weather[0].description);
 
                         //append Elements here
-                        parkCardEl.appendChild(tempEl)
-                        parkCardEl.appendChild(humidEl)
-                        parkCardEl.appendChild(windEl)
-                        parkCardEl.appendChild(condEl);
+                        var weatherCardEl = document.createElement('div');
+                        weatherCardEl.setAttribute('id', 'weatherCard');
+
+                        weatherCardEl.appendChild(tempEl);
+                        weatherCardEl.appendChild(humidEl);
+                        weatherCardEl.appendChild(windEl);
+                        weatherCardEl.appendChild(condEl);
+
+                        weatherCardsEl.appendChild(weatherCardEl);
                     })
             }
         })
 }
 
+function displayDate() {
+    console.log(currentDate);
+
+    var today = document.createElement('p');
+    today.setAttribute('id', 'currentDate')
+    today.textContent = 'Today\'s Date is: ' + currentDate
+
+    formEl.appendChild(today);
+}
+
+displayDate();
 
 submitBtnEl.addEventListener('click', logData);
