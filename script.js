@@ -4,38 +4,57 @@ var formEl = document.querySelector('#form');
 var resultsEl = document.querySelector('#results');
 var weatherEl = document.querySelector('#weather');
 var weatherCardsEl = document.querySelector('#weatherCards');
-var currentDate = moment().format('MMM Do YYYY');
+var formHeadEl = document.querySelector('#formHead')
+var currentDate = moment().format('MMM Do');
+var lastSearches = localStorage.getItem('searchValues');
 
-
-
-var toJSON = function (response) {
-    return response.json();
-};
-var capitalize = function (string) {
-    return string[0].toUpperCase() + string.slice(1);
-}
-
-// need to update so that localStorage saves userInputEl as an array entry, then create function to JSON.parse values from that array when they're needed
 function logData(event) {
     event.preventDefault();
     var userInputEl = document.querySelector('#stateSearch').value;
-    localStorage.setItem('searchValues', userInputEl);
-    console.log(userInputEl);
+
+    if (lastSearches && lastSearches.length) {
+        localStorage.setItem('searchValues', lastSearches + ',' + userInputEl);
+        console.log(lastSearches)
+        
+    } else {
+        localStorage.setItem('searchValues', userInputEl);
+    }
     getParks();
+}
+
+var toJSON = function (response) {
+    return response.json();
+}
+
+var capitalize = function (string) {
+    return string[0].toUpperCase() + string.slice(1);
 }
 
 function firstFive(zip) {
     return zip.substring(0, 5);
 }
 
+function displaySearches () {
+    console.log(lastSearches);
+}
+
+
 function getParks() {
     resultsEl.innerHTML = '';
     weatherCardsEl.innerHTML = '';
     var userInputEl = document.querySelector('#stateSearch').value;
 
+
     var parkURL = 'https://developer.nps.gov/api/v1/parks?stateCode=' + userInputEl + '&limit=30&start=0&api_key=B93I9aQi7T1FM0mnp8EPcpawoqg1G1XYI6IVWLWy'
 
-    console.log(parkURL);
+    var listHistory = document.createElement('ul');
+    listHistory.setAttribute('id', 'history');
+    var historyItem = document.createElement('li');
+    historyItem.textContent = userInputEl;
+
+    formEl.appendChild(listHistory);
+    listHistory.appendChild(historyItem);
+
 
     function renderWeather(card, parkZIP) {
         var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?zip=' + parkZIP + ',US&appid=a12e022cb62b59c204d6c4c7065d99c2&units=imperial'
@@ -43,11 +62,6 @@ function getParks() {
         fetch(weatherURL)
             .then(toJSON)
             .then(function (weatherResults) {
-                console.log(weatherResults);
-                console.log(weatherResults.main.temp);
-                console.log(weatherResults.wind.speed);
-                console.log(weatherResults.weather[0].description);
-
 
                 //create Elements here
                 var weathHeadEl = document.createElement('p');
@@ -118,15 +132,15 @@ function getParks() {
 }
 
 function displayDate() {
-    console.log(currentDate);
 
     var today = document.createElement('p');
     today.setAttribute('id', 'currentDate')
     today.textContent = 'Today\'s Date is: ' + currentDate
 
-    formEl.appendChild(today);
+    formHeadEl.appendChild(today);
 }
 
 displayDate();
+displaySearches();
 
 submitBtnEl.addEventListener('click', logData);
