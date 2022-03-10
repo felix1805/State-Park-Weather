@@ -38,7 +38,6 @@ function displaySearches () {
     console.log(lastSearches);
 }
 
-
 function getParks() {
     resultsEl.innerHTML = '';
     weatherCardsEl.innerHTML = '';
@@ -101,6 +100,7 @@ function getParks() {
                 var parkName = parkName.replace('"', '').slice(0, -1);
                 var parkZIP = firstFive(results.data[i].addresses[0].postalCode);
                 var parkDesc = (JSON.stringify(results.data[i].description))
+                var parkAlt = (JSON.stringify(results.data[i].images[0].altText))
 
                 var parkCardEl = document.createElement('div');
                 parkCardEl.setAttribute('id', 'parkCard')
@@ -114,6 +114,7 @@ function getParks() {
                 parkNameEl.textContent = parkName;
                 parkNameEl.setAttribute('id', 'parkName');
                 parkImg.setAttribute('src', results.data[i].images[0].url);
+                parkImg.setAttribute('alt', parkAlt.replace('"', '').slice(0, -1))
                 parkImg.setAttribute('id', 'parkPic');
                 parkInfo.textContent = parkDesc.replace('"', '').slice(0, -1);
                 parkInfo.setAttribute('id', 'parkDesc');
