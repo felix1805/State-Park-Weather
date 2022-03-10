@@ -175,3 +175,18 @@ h3  {
         font-size: small;
     }
 }
+
+@media screen and (max-width: 640px) {
+    article {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+        height: 100%;
+    }
+    header {
+        width: 100%;
+    }
+}
+                    
