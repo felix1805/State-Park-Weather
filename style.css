@@ -6,7 +6,6 @@
 
 body {
     display: flex;
-    justify-content: space-between;
     background-color: rgba(85, 107, 47, 0.924);
     margin: 0;
 }
@@ -29,6 +28,7 @@ h2 {
     border: solid 1px black;
     background-color:forestgreen;
     text-align: center;
+    width: 90%;
 }
 
 h3  {
@@ -39,38 +39,58 @@ h3  {
     margin: 5px;
 }
 
-#parkPic {
-    width: 200px;
-}
-
-#weather {
-    width: 20%;
-}
 
 #results {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 #weatherCard {
     background-color: rgba(76, 191, 236, 0.794);
     border: 1px solid black;
-    margin: 2px;
     text-align: center;
     color: white;
-    padding: 1px;
     display: block;
+    width: 90%;
 }
 
 #weatherCards {
     flex-direction: column;
 }
 
+#weathHead {
+    color: orange;
+    background-color: purple;
+    font-size: x-large;
+    margin-top: 0px;
+    border-bottom: black 1px solid;
+}
+
 #parkCard {
     border: solid 1px black;
     background-color: rgb(117, 149, 62);
     margin-bottom: 3px;
+    margin-left: 3px;
     padding: 5px;
-    display: block;
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#parkDesc {
+    color: seashell;
+    text-align: justify;
+    width: 90%;
+    display: flex;
+}
+
+#parkPic {
+    width: 475px;
+    display: flex;
 }
 
 #form {
@@ -91,3 +111,23 @@ h3  {
     width: 97%;
 }
 
+@media only screen and (max-width: 1400px) {
+    #parkPic {
+        width: 300px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    #parkPic {
+        width: 200px;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    #parkPic {
+        width: 100px;
+    }
+    * {
+        font-size: small;
+    }
+}
