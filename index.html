@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>State Park Weather</title>
     <link rel="stylesheet" href="./style.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+
 
 </head>
+
 <body>
     <form id="form">
         <h1>State Park Weather</h1>
-        <h2>Search a State</h2>
+        <h3>Search a State</h3>
         <input type="text" id="stateSearch">
         <button type="submit" id="submitBtn">Submit</button>
     </form>
     <section id="results">
-        <h2>Results:</h2>
+        <h2>Parks: </h2>
     </section>
-    
+
+    <section id="weather">
+        <h3>Weather:</h3>
+        <div id="weatherCards"></div>
+    </section>
+
     <script src="./script.js"></script>
 </body>
+
 </html>
