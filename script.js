@@ -1,4 +1,4 @@
-var userInputEl = document.querySelector('#stateSearch').value;
+var userInputEl = document.querySelector('#stateSearch');
 var submitBtnEl = document.querySelector('#submitBtn');
 var formEl = document.querySelector('#form');
 var resultsEl = document.querySelector('#results');
@@ -6,6 +6,7 @@ var weatherEl = document.querySelector('#weather');
 var weatherCardsEl = document.querySelector('#weatherCards');
 var formHeadEl = document.querySelector('#formHead')
 var currentDate = moment().format('MMM Do');
+var historyContainer = document.querySelector(".history-container");
 
 // var lastSearches = localStorage.getItem('searchValues');
 
@@ -23,11 +24,37 @@ var currentDate = moment().format('MMM Do');
 
 function logData(event) {
     event.preventDefault();
+    console.log("am i working");
     var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
-    lastSearches.push(userInputEl.value);
+    if(lastSearches.length>=5) {
+        lastSearches.shift();
+    }
+    if(!lastSearches.includes(userInputEl.value)){
+        lastSearches.push(userInputEl.value);
+    }
+
     localStorage.setItem('searchValues', JSON.stringify(lastSearches));
+
+    var historyItem = document.createElement('button');
+    historyItem.setAttribute('id', 'historyItems');
+    historyItem.textContent = userInputEl.value;
+    historyContainer.appendChild(historyItem);
+
+    displayHistory();
     getParks();
 }
+
+function displayHistory(){
+    var lastSearches =( JSON.parse(localStorage.getItem('searchValues')) || []).reverse();
+    historyContainer.innerHTML ="";
+    for(var search of lastSearches){
+        var historyItem = document.createElement('button');
+        historyItem.setAttribute('id', 'historyItems');
+        historyItem.textContent = search;
+        historyContainer.appendChild(historyItem);
+    }
+}
+displayHistory();
 
 var toJSON = function (response) {
     return response.json();
@@ -48,47 +75,44 @@ function displaySearches() {
     console.log(lastSearches);
 }
 
-function getParks() {
+function renderWeather(card, parkZIP) {
+    var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?zip=' + parkZIP + ',US&appid=a12e022cb62b59c204d6c4c7065d99c2&units=imperial'
+    fetch(weatherURL)
+        .then(toJSON)
+        .then(function (weatherResults) {
+            //create Elements here
+            var weathHeadEl = document.createElement('p');
+            var tempEl = document.createElement('p');
+            var humidEl = document.createElement('p');
+            var windEl = document.createElement('p');
+            var condEl = document.createElement('p');
+            //dress up Elements here
+            tempEl.textContent = weatherResults.main.temp + '°F';
+            humidEl.textContent = 'Humidity: ' + weatherResults.main.humidity + '%';
+            windEl.textContent = 'Wind Speed: ' + weatherResults.wind.speed + ' mph';
+            condEl.textContent = 'Current Conditions: ' + capitalize(weatherResults.weather[0].description);
+            weathHeadEl.textContent = 'Weather';
+            weathHeadEl.setAttribute('id', 'weathHead');
+            //append Elements here
+            var weatherCardEl = document.createElement('div');
+            weatherCardEl.setAttribute('id', 'weatherCard');
+            weatherCardEl.appendChild(weathHeadEl);
+            weatherCardEl.appendChild(tempEl);
+            weatherCardEl.appendChild(humidEl);
+            weatherCardEl.appendChild(windEl);
+            weatherCardEl.appendChild(condEl);
+            card.appendChild(weatherCardEl);
+        })
+}
+
+function getParks(term) {
     resultsEl.innerHTML = '';
     weatherCardsEl.innerHTML = '';
-    var userInputEl = document.querySelector('#stateSearch').value;
-    var parkURL = 'https://developer.nps.gov/api/v1/parks?stateCode=' + userInputEl + '&limit=30&start=0&api_key=B93I9aQi7T1FM0mnp8EPcpawoqg1G1XYI6IVWLWy'
-    var listHistory = document.createElement('ul');
-    listHistory.setAttribute('id', 'history');
-    var historyItem = document.createElement('li');
-    historyItem.setAttribute('id', 'historyItems');
-    historyItem.textContent = userInputEl;
-    formEl.appendChild(listHistory);
-    listHistory.appendChild(historyItem);
-    function renderWeather(card, parkZIP) {
-        var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?zip=' + parkZIP + ',US&appid=a12e022cb62b59c204d6c4c7065d99c2&units=imperial'
-        fetch(weatherURL)
-            .then(toJSON)
-            .then(function (weatherResults) {
-                //create Elements here
-                var weathHeadEl = document.createElement('p');
-                var tempEl = document.createElement('p');
-                var humidEl = document.createElement('p');
-                var windEl = document.createElement('p');
-                var condEl = document.createElement('p');
-                //dress up Elements here
-                tempEl.textContent = weatherResults.main.temp + '°F';
-                humidEl.textContent = 'Humidity: ' + weatherResults.main.humidity + '%';
-                windEl.textContent = 'Wind Speed: ' + weatherResults.wind.speed + ' mph';
-                condEl.textContent = 'Current Conditions: ' + capitalize(weatherResults.weather[0].description);
-                weathHeadEl.textContent = 'Weather';
-                weathHeadEl.setAttribute('id', 'weathHead');
-                //append Elements here
-                var weatherCardEl = document.createElement('div');
-                weatherCardEl.setAttribute('id', 'weatherCard');
-                weatherCardEl.appendChild(weathHeadEl);
-                weatherCardEl.appendChild(tempEl);
-                weatherCardEl.appendChild(humidEl);
-                weatherCardEl.appendChild(windEl);
-                weatherCardEl.appendChild(condEl);
-                card.appendChild(weatherCardEl);
-            })
-    }
+
+    var stateCode = term || userInputEl.value 
+    var parkURL = 'https://developer.nps.gov/api/v1/parks?stateCode=' +stateCode + '&limit=30&start=0&api_key=B93I9aQi7T1FM0mnp8EPcpawoqg1G1XYI6IVWLWy'
+    
+    
     fetch(parkURL)
         .then(toJSON)
         .then(function (results) {
@@ -147,3 +171,10 @@ function displayDate() {
 displayDate();
 // displaySearches();
 submitBtnEl.addEventListener('click', logData);
+historyContainer.addEventListener('click',function(e){
+    e.preventDefault();
+    if(e.target.type==="submit"){
+        var term = e.target.textContent;
+        getParks(term);
+    }
+})
