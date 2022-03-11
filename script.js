@@ -40,11 +40,11 @@ function firstFive(zip) {
 // function displaySearches () {
 //     console.log(lastSearches);
 // }
-function displaySearches() {
-    // retrieves searches
-    var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
-    console.log(lastSearches);
-}
+// function displaySearches() {
+//     // retrieves searches
+//     var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
+//     console.log(lastSearches);
+// }
 
 function getParks() {
     resultsEl.innerHTML = '';
@@ -122,6 +122,20 @@ function getParks() {
         })
 }
 
+var memeGif = document.createElement('button')
+memeGif.setAttribute('id', 'meme')
+formEl.prepend(memeGif);
+
+function dump() {
+    resultsEl.innerHTML = '';
+    formEl.innerHTML = '';
+    var memeTime = document.createElement('img');
+    memeTime.setAttribute('src', 'https://media2.giphy.com/media/ZecVmf45WkpxbI9bEK/giphy.gif?cid=790b76115ae0031e747794cea370d416ebb3518499f3447a&rid=giphy.gif&ct=g');
+    resultsEl.appendChild(memeTime);
+}
+
+memeGif.addEventListener('click', dump);
+
 function displayDate() {
     var today = document.createElement('p');
     today.setAttribute('id', 'currentDate')
@@ -129,5 +143,5 @@ function displayDate() {
     formHeadEl.appendChild(today);
 }
 displayDate();
-displaySearches();
+// displaySearches();
 submitBtnEl.addEventListener('click', logData);
