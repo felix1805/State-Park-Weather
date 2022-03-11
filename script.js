@@ -1,3 +1,4 @@
+// global variable declarations
 var userInputEl = document.querySelector('#stateSearch');
 var submitBtnEl = document.querySelector('#submitBtn');
 var formEl = document.querySelector('#form');
@@ -8,20 +9,7 @@ var formHeadEl = document.querySelector('#formHead')
 var currentDate = moment().format('MMM Do');
 var historyContainer = document.querySelector(".history-container");
 
-// var lastSearches = localStorage.getItem('searchValues');
-
-// function logData(event) {
-//     event.preventDefault();
-//     var userInputEl = document.querySelector('#stateSearch').value;
-//     if (lastSearches && lastSearches.length) {
-//         localStorage.setItem('searchValues', lastSearches + ',' + userInputEl);
-//         console.log(lastSearches)
-//     } else {
-//         localStorage.setItem('searchValues', userInputEl);
-//     }
-//     getParks();
-// }
-
+// stores and displays user searches in localStorage, then initializes getParks()
 function logData(event) {
     event.preventDefault();
     console.log("am i working");
@@ -44,6 +32,7 @@ function logData(event) {
     getParks();
 }
 
+// displays user search history upon page load
 function displayHistory(){
     var lastSearches =( JSON.parse(localStorage.getItem('searchValues')) || []).reverse();
     historyContainer.innerHTML ="";
@@ -56,25 +45,22 @@ function displayHistory(){
 }
 displayHistory();
 
+// utilities to make life easier while coding
+
+// converts input data to string
 var toJSON = function (response) {
     return response.json();
 }
+// capitalizes the first letter of a string
 var capitalize = function (string) {
     return string[0].toUpperCase() + string.slice(1);
 }
+// trims ZIP codes to 5 characters (some were coming through with 10 characters) to fetch weather info
 function firstFive(zip) {
     return zip.substring(0, 5);
 }
 
-// function displaySearches () {
-//     console.log(lastSearches);
-// }
-function displaySearches() {
-    // retrieves searches
-    var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
-    console.log(lastSearches);
-}
-
+// renders our "weather cards"
 function renderWeather(card, parkZIP) {
     var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?zip=' + parkZIP + ',US&appid=a12e022cb62b59c204d6c4c7065d99c2&units=imperial'
     fetch(weatherURL)
@@ -105,12 +91,13 @@ function renderWeather(card, parkZIP) {
         })
 }
 
+// fetches data that is displayed for the individual parks
 function getParks(term) {
     resultsEl.innerHTML = '';
     weatherCardsEl.innerHTML = '';
 
     var stateCode = term || userInputEl.value 
-    var parkURL = 'https://developer.nps.gov/api/v1/parks?stateCode=' +stateCode + '&limit=30&start=0&api_key=B93I9aQi7T1FM0mnp8EPcpawoqg1G1XYI6IVWLWy'
+    var parkURL = 'https://developer.nps.gov/api/v1/parks?stateCode=' + stateCode + '&limit=30&start=0&api_key=B93I9aQi7T1FM0mnp8EPcpawoqg1G1XYI6IVWLWy'
     
     
     fetch(parkURL)
@@ -148,29 +135,18 @@ function getParks(term) {
         })
 }
 
-var memeGif = document.createElement('button')
-memeGif.setAttribute('id', 'meme')
-formEl.prepend(memeGif);
-
-function dump() {
-    resultsEl.innerHTML = '';
-    formEl.innerHTML = '';
-    var memeTime = document.createElement('img');
-    memeTime.setAttribute('src', 'https://media2.giphy.com/media/ZecVmf45WkpxbI9bEK/giphy.gif?cid=790b76115ae0031e747794cea370d416ebb3518499f3447a&rid=giphy.gif&ct=g');
-    resultsEl.appendChild(memeTime);
-}
-
-memeGif.addEventListener('click', dump);
-
+// displays current date using moment()
 function displayDate() {
     var today = document.createElement('p');
     today.setAttribute('id', 'currentDate')
     today.textContent = 'Today\'s Date is: ' + currentDate
     formHeadEl.appendChild(today);
 }
-displayDate();
-// displaySearches();
+
+// enables "search" button to begin process of logging and fetching data
 submitBtnEl.addEventListener('click', logData);
+
+// enables history buttons to trigger associated search again
 historyContainer.addEventListener('click',function(e){
     e.preventDefault();
     if(e.target.type==="submit"){
@@ -178,3 +154,6 @@ historyContainer.addEventListener('click',function(e){
         getParks(term);
     }
 })
+
+// displays date on page load
+displayDate();
