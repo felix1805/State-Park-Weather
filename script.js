@@ -6,6 +6,7 @@ var weatherEl = document.querySelector('#weather');
 var weatherCardsEl = document.querySelector('#weatherCards');
 var formHeadEl = document.querySelector('#formHead')
 var currentDate = moment().format('MMM Do');
+
 // var lastSearches = localStorage.getItem('searchValues');
 
 // function logData(event) {
@@ -19,6 +20,7 @@ var currentDate = moment().format('MMM Do');
 //     }
 //     getParks();
 // }
+
 function logData(event) {
     event.preventDefault();
     var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
@@ -37,14 +39,14 @@ function firstFive(zip) {
     return zip.substring(0, 5);
 }
 
-// function displaySearches () {
-//     console.log(lastSearches);
-// }
-// function displaySearches() {
-//     // retrieves searches
-//     var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
-//     console.log(lastSearches);
-// }
+function displaySearches () {
+    console.log(lastSearches);
+}
+function displaySearches() {
+    // retrieves searches
+    var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
+    console.log(lastSearches);
+}
 
 function getParks() {
     resultsEl.innerHTML = '';
@@ -143,5 +145,5 @@ function displayDate() {
     formHeadEl.appendChild(today);
 }
 displayDate();
-// displaySearches();
+displaySearches();
 submitBtnEl.addEventListener('click', logData);
