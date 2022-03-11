@@ -6,18 +6,27 @@ var weatherEl = document.querySelector('#weather');
 var weatherCardsEl = document.querySelector('#weatherCards');
 var formHeadEl = document.querySelector('#formHead')
 var currentDate = moment().format('MMM Do');
-var lastSearches = localStorage.getItem('searchValues');
+// var lastSearches = localStorage.getItem('searchValues');
+
+// function logData(event) {
+//     event.preventDefault();
+//     var userInputEl = document.querySelector('#stateSearch').value;
+//     if (lastSearches && lastSearches.length) {
+//         localStorage.setItem('searchValues', lastSearches + ',' + userInputEl);
+//         console.log(lastSearches)
+//     } else {
+//         localStorage.setItem('searchValues', userInputEl);
+//     }
+//     getParks();
+// }
 function logData(event) {
     event.preventDefault();
-    var userInputEl = document.querySelector('#stateSearch').value;
-    if (lastSearches && lastSearches.length) {
-        localStorage.setItem('searchValues', lastSearches + ',' + userInputEl);
-        console.log(lastSearches)
-    } else {
-        localStorage.setItem('searchValues', userInputEl);
-    }
+    var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
+    lastSearches.push(userInputEl.value);
+    localStorage.setItem('searchValues', JSON.stringify(lastSearches));
     getParks();
 }
+
 var toJSON = function (response) {
     return response.json();
 }
@@ -27,9 +36,16 @@ var capitalize = function (string) {
 function firstFive(zip) {
     return zip.substring(0, 5);
 }
-function displaySearches () {
+
+// function displaySearches () {
+//     console.log(lastSearches);
+// }
+function displaySearches() {
+    // retrieves searches
+    var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
     console.log(lastSearches);
 }
+
 function getParks() {
     resultsEl.innerHTML = '';
     weatherCardsEl.innerHTML = '';
@@ -38,6 +54,7 @@ function getParks() {
     var listHistory = document.createElement('ul');
     listHistory.setAttribute('id', 'history');
     var historyItem = document.createElement('li');
+    historyItem.setAttribute('id', 'historyItems');
     historyItem.textContent = userInputEl;
     formEl.appendChild(listHistory);
     listHistory.appendChild(historyItem);
@@ -104,6 +121,7 @@ function getParks() {
             }
         })
 }
+
 function displayDate() {
     var today = document.createElement('p');
     today.setAttribute('id', 'currentDate')
