@@ -39,9 +39,9 @@ function firstFive(zip) {
     return zip.substring(0, 5);
 }
 
-function displaySearches () {
-    console.log(lastSearches);
-}
+// function displaySearches () {
+//     console.log(lastSearches);
+// }
 function displaySearches() {
     // retrieves searches
     var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
@@ -145,5 +145,5 @@ function displayDate() {
     formHeadEl.appendChild(today);
 }
 displayDate();
-displaySearches();
+// displaySearches();
 submitBtnEl.addEventListener('click', logData);
