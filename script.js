@@ -12,7 +12,6 @@ var historyContainer = document.querySelector(".history-container");
 // stores and displays user searches in localStorage, then initializes getParks()
 function logData(event) {
     event.preventDefault();
-    console.log("am i working");
     var lastSearches = JSON.parse(localStorage.getItem('searchValues')) || [];
     if(lastSearches.length>=5) {
         lastSearches.shift();

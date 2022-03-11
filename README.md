@@ -1,4 +1,4 @@
-# State-Park-Weather
+# National-Park-Weather
 
 ## Description
 This website was designed to provide National Parks and weather information based on a state input by the user. Upon searching for any given state, the user is presented with "park cards" displaying a photo of the park as well as a description. On the backend, additional semantic value is provided by an "alt tag" for the photos. The user will also be presented with a "weather card" displaying weather data for the associated park. A recent search history is populated after each search.
@@ -15,7 +15,8 @@ This website was designed to provide National Parks and weather information base
 We built our page using a simple HTML layout to begin. JavaScript was used for functionality using a combination of script and local storage components. The program pulls from two seperate APIs (National Parks Service & OpenWeather). We then styled everything using our own custom CSS file. There are some dynamic elements to the page such as a gif that displays when the weather card is hovered over. 
 
 <!-- adding screenshots of code when completed -->
-![script.js] ()
+
+![Code snippet](assets/Code%20snippet.png)
 
 ## Authors and Acknowledgements
 Edin Hurem, Felix Petzsche, Sean Duiser
