@@ -1,18 +1,8 @@
+/* this is a custom made from scratch style sheet - we did not use any 3rd party CSS frameworks */
+
 * {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-}
-
-#meme {
-    /* visibility: hidden; */
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: 0;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    
 }
 
 title {
@@ -22,7 +12,7 @@ title {
 body {
     display: flex;
     margin: 0;
-    background-image: url(https://media.timeout.com/images/105551856/image.jpg);
+    background-image: url(./assets/yosemite.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -72,13 +62,21 @@ h3  {
     margin-top: 2px;
     margin-bottom: 2px;
     opacity: 80%;
-
 }
 
 #historyItems {
     display: inline-block;
     width: 100%;
-    padding-left: 0;
+    color: seashell;
+    background-color: forestgreen;
+    border:1px solid seashell;
+    border-radius: 2px;
+    align-items: center;
+}
+
+#historyItems:hover {
+    color: forestgreen;
+    background-color: seashell;
 }
 
 .sticky{
@@ -140,7 +138,6 @@ h3  {
 
 #weatherCards {
     flex-direction: column;
-    
 }
 
 #weathHead {
@@ -176,14 +173,12 @@ h3  {
     width: 90%;
     display: flex;
     padding: 5px;
-
 }
 
 #parkDesc:hover{
     background-color: rgba(78, 105, 25, 0.767);
     border-radius: 5px;
     font-size: 105%;
-
 }
 
 #parkPic {
@@ -275,6 +270,13 @@ h1:hover {
         margin-right: 100px;
         margin-left: 100px;
     }
+    .history-container{
+        display: inline-block;
+    }
+    
+    #historyItems{
+        width: 20%;
+    }
 }
 
 @media only screen and (max-width: 484px) {
@@ -287,7 +289,7 @@ h1:hover {
     }
     
     #historyItems{
-        width: 25%;
+        width: 20%;
     }
 
     #parkPic {
