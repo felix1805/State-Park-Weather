@@ -16,19 +16,16 @@
 }
 
 title {
-    background-image: url(https://media2.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif?cid=790b7611345451bae5f5a0f219ee42c0fa32f791380335c6&rid=giphy.gif&ct=g);
-    background-position: center;
-    background-size: contain;
     display: none;
 }
 
 body {
     display: flex;
-    /* background-color: rgba(85, 107, 47, 0.924); */
     margin: 0;
     background-image: url(https://media.timeout.com/images/105551856/image.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-size: cover;
 }
 
 div {
