@@ -77,7 +77,14 @@ h3  {
 
 #historyItems {
     display: inline-block;
+    width: 100%;
     padding-left: 0;
+}
+
+.sticky{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
 
 #results {
@@ -86,6 +93,9 @@ h3  {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 #stateSearch {
@@ -216,6 +226,10 @@ h1:hover {
     font-weight: bold;
 }
 
+.history-container{
+    width: 100%!important;
+}
+
 @media only screen and (max-width: 1400px) {
     #parkPic {
         width: 350px;
@@ -264,6 +278,17 @@ h1:hover {
 }
 
 @media only screen and (max-width: 484px) {
+    #form{
+        background-image: url('assets/yosemite.jpg');
+    }
+
+    .history-container{
+        display: inline-block;
+    }
+    
+    #historyItems{
+        width: 25%;
+    }
 
     #parkPic {
         width: 100px;
