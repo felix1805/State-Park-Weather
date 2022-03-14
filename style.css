@@ -72,11 +72,15 @@ h3  {
     border:1px solid seashell;
     border-radius: 2px;
     align-items: center;
+    height: 42px;
+    font-size: large;
+    
 }
 
 #historyItems:hover {
     color: forestgreen;
     background-color: seashell;
+
 }
 
 .sticky{
@@ -106,7 +110,20 @@ h3  {
 #submitBtn {
     margin-bottom: 20px;
     opacity: 80%;
+    height: 42px;
+    background-color: skyblue;
+    color:black;
+    text-shadow: white 1px 1px;
+    border-radius: 4px;
+    font-size: large;
 }
+
+#submitBtn:hover {
+    color: skyblue;
+    background-color: black;
+}
+
+
 
 #weatherCard {
     background-color: rgba(76, 191, 236, 0.794);
@@ -347,5 +364,4 @@ h1:hover {
     h1 {
         height: 50%;
     }
-}
-                    
+}           
